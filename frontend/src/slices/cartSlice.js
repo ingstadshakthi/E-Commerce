@@ -24,10 +24,13 @@ const cartSlice = createSlice({
         removeFromCart: (state, action) => {
             state.cartItems = state.cartItems.filter((item) => item._id !== action.payload);
             state = updateCart(state);
-        }
+        },
+        // NOTE: here we need to reset state for when a user logs out so the next
+        // user doesn't inherit the previous users cart and shipping
+        resetCart: (state) => (state = initialState),
     }
 });
 
-export const { addToCart, removeFromCart } = cartSlice.actions;
+export const { addToCart, removeFromCart, resetCart } = cartSlice.actions;
 
 export default cartSlice.reducer;
